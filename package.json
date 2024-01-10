@@ -15,7 +15,6 @@
     "popper.js": "^1.16.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-infinite-scroll-component": "^6.1.0",
     "react-query": "^3.39.3",
     "react-router-dom": "^6.21.1",
     "react-scripts": "5.0.1",
@@ -48,6 +47,9 @@
     ]
   },
   "devDependencies": {
-    "@types/react-window": "^1.8.8"
+    "@types/react-window": "^1.8.8",
+    "eslint": "^8.56.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-import": "^2.29.1"
   }
 }
