@@ -1,4 +1,5 @@
 [![Ru](https://img.shields.io/badge/Rus-blue)](README_ru.md)
+[![Maintainability](https://api.codeclimate.com/v1/badges/32d9fc9cc5c8883cebf2/maintainability)](https://codeclimate.com/github/ilyasilkin27/test/maintainability)
 
 ## Description
 
