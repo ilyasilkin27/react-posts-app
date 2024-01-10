@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import LoadingIndicator from './LoadingIndicator';
 
-const PostDetails = ({ post }: { post: any }) => (
-  <div>
-    <h3 className="mt-4">{post.title}</h3>
-    <p>{post.body}</p>
-  </div>
-);
+function PostDetails({ post }: { post: any }) {
+  return (
+    <div>
+      <h3 className="mt-4">{post.title}</h3>
+      <p>{post.body}</p>
+    </div>
+  );
+}
 
 const renderContent = (isLoading: boolean, post: any) => {
   if (isLoading) {
@@ -24,7 +26,7 @@ const usePostDetailsQuery = (postId: string) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-     if (postId) {
+    if (postId) {
       const fetchPostData = async () => {
         try {
           const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`);
@@ -57,7 +59,7 @@ const PostDetailsPage: React.FC = () => {
       <h2>Post Details</h2>
       {renderContent(isLoading, post)}
       <button className="btn btn-primary">
-        <Link className='text-white' style={{ textDecoration: 'none'}} to="/">Back</Link>
+        <Link className="text-white" style={{ textDecoration: 'none' }} to="/">Back</Link>
       </button>
     </div>
   );

@@ -3,47 +3,49 @@ import { useInfiniteQuery } from 'react-query';
 import Post from './Post';
 import LoadingIndicator from './LoadingIndicator';
 
-const PostList = ({ data }: { data: any[] }) => (
-  <>
-    {data.map((post: any) => (
-      <Post key={post.id} post={post} />
-    ))}
-  </>
-);
-
-const LoadMoreButton = ({ onClick, isFetchingNextPage }: { onClick: () => void; isFetchingNextPage: boolean }) => (
-  <div className="text-center my-4">
-    <button 
-      className="btn btn-primary" 
-      onClick={onClick}
-      disabled={isFetchingNextPage}
-    >
-      {isFetchingNextPage ? (
-        <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-      ) : (
-        "Load More"
-      )}
-    </button>
-  </div>
-);
-
-const usePostListQuery = () => {
-  return useInfiniteQuery(
-    'posts',
-    async ({ pageParam = 1 }) => {
-      const response = await fetch(`https://jsonplaceholder.typicode.com/posts?_page=${pageParam}&_limit=10`);
-      return response.json();
-    },
-    {
-      getNextPageParam: (lastPage, allPages) => {
-        if (lastPage.length < 10) {
-          return null;
-        }
-        return allPages.length + 1;
-      },
-    }
+function PostList({ data }: { data: any[] }) {
+  return (
+    <>
+      {data.map((post: any) => (
+        <Post key={post.id} post={post} />
+      ))}
+    </>
   );
-};
+}
+
+function LoadMoreButton({ onClick, isFetchingNextPage }: { onClick: () => void; isFetchingNextPage: boolean }) {
+  return (
+    <div className="text-center my-4">
+      <button
+        className="btn btn-primary"
+        onClick={onClick}
+        disabled={isFetchingNextPage}
+      >
+        {isFetchingNextPage ? (
+          <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true" />
+        ) : (
+          'Load More'
+        )}
+      </button>
+    </div>
+  );
+}
+
+const usePostListQuery = () => useInfiniteQuery(
+  'posts',
+  async ({ pageParam = 1 }) => {
+    const response = await fetch(`https://jsonplaceholder.typicode.com/posts?_page=${pageParam}&_limit=10`);
+    return response.json();
+  },
+  {
+    getNextPageParam: (lastPage, allPages) => {
+      if (lastPage.length < 10) {
+        return null;
+      }
+      return allPages.length + 1;
+    },
+  },
+);
 
 const handleLoadMore = (fetchNextPage: any, setPage: any, page: number) => {
   fetchNextPage({ pageParam: page + 1 });
@@ -65,8 +67,8 @@ const Home: React.FC = () => {
   }
 
   return (
-    <div className='container'>
-      <h1 className='mt-4 mb-4 text-center'>Posts</h1>
+    <div className="container">
+      <h1 className="mt-4 mb-4 text-center">Posts</h1>
       {data?.pages.map((pageData, pageIndex) => (
         <React.Fragment key={pageIndex}>
           <PostList data={pageData} />
