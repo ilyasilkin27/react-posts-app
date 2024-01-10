@@ -2,6 +2,25 @@ import React, { useState } from 'react';
 import { useInfiniteQuery } from 'react-query';
 import Post from './Post';
 
+
+const LoadingIndicator = () => (
+  <div className='container mt-4 mb-4'>
+    <div className="mt-4 mb-4  d-flex justify-content-center">
+      <div className="mt-4 mb-4 spinner-border" role="status">
+        <span className="sr-only"></span>
+      </div>
+    </div>
+  </div>
+);
+
+const PostList = ({ data }: { data: any[] }) => (
+  <>
+    {data.map((post: any) => (
+      <Post key={post.id} post={post} />
+    ))}
+  </>
+);
+
 const Home: React.FC = () => {
   const [page, setPage] = useState(1);
 
@@ -33,15 +52,7 @@ const Home: React.FC = () => {
   };
 
   if (isLoading) {
-    return (
-        <div className='container mt-4 mb-4 '>
-            <div className="mt-4 mb-4  d-flex justify-content-center">
-                <div className="mt-4 mb-4 spinner-border" role="status">
-                    <span className="sr-only"></span>
-                </div>
-            </div>
-        </div>
-    );
+    return <LoadingIndicator />;
   }
 
   return (
@@ -49,9 +60,7 @@ const Home: React.FC = () => {
       <h1 className='mt-4 mb-4 text-center'>Posts</h1>
       {data?.pages.map((pageData, pageIndex) => (
         <React.Fragment key={pageIndex}>
-          {pageData.map((post: any) => (
-            <Post key={post.id} post={post} />
-          ))}
+          <PostList data={pageData} />
         </React.Fragment>
       ))}
       <div className="text-center my-4">
