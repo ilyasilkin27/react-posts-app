@@ -20,10 +20,9 @@ const Home: React.FC = () => {
     {
       getNextPageParam: (lastPage, allPages) => {
         if (lastPage.length < 10) {
-          // If the last page is less than the limit, there are no more pages
-          return undefined;
+          return null;
         }
-        return allPages.length + 1; // Return the next page number to fetch
+        return allPages.length + 1;
       },
     }
   );
@@ -59,7 +58,7 @@ const Home: React.FC = () => {
         <button 
           className="btn btn-primary" 
           onClick={handleLoadMore}
-          disabled={isFetchingNextPage} // Disable the button when fetching more posts
+          disabled={isFetchingNextPage}
         >
           {isFetchingNextPage ? (
             <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
