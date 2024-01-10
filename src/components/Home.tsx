@@ -45,6 +45,11 @@ const usePostListQuery = () => {
   );
 };
 
+const handleLoadMore = (fetchNextPage: any, setPage: any, page: number) => {
+  fetchNextPage({ pageParam: page + 1 });
+  setPage(page + 1);
+};
+
 const Home: React.FC = () => {
   const [page, setPage] = useState(1);
   const {
@@ -55,12 +60,10 @@ const Home: React.FC = () => {
     isLoading,
   } = usePostListQuery();
 
-  const handleLoadMore = () => {
-    fetchNextPage({ pageParam: page + 1 });
-    setPage(page + 1);
-  };
+  if (isLoading) {
+    return <LoadingIndicator />;
+  }
 
-  if (isLoading) return <LoadingIndicator />;
   return (
     <div className='container'>
       <h1 className='mt-4 mb-4 text-center'>Posts</h1>
@@ -69,7 +72,7 @@ const Home: React.FC = () => {
           <PostList data={pageData} />
         </React.Fragment>
       ))}
-      <LoadMoreButton onClick={handleLoadMore} isFetchingNextPage={isFetchingNextPage} />
+      <LoadMoreButton onClick={() => handleLoadMore(fetchNextPage, setPage, page)} isFetchingNextPage={isFetchingNextPage} />
       {!hasNextPage && <div className="text-center my-4">No more posts to load</div>}
     </div>
   );
