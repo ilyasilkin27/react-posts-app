@@ -27,16 +27,8 @@ const LoadMoreButton = ({ onClick, isFetchingNextPage }: { onClick: () => void; 
   </div>
 );
 
-const Home: React.FC = () => {
-  const [page, setPage] = useState(1);
-
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-  } = useInfiniteQuery(
+const usePostListQuery = () => {
+  return useInfiniteQuery(
     'posts',
     async ({ pageParam = 1 }) => {
       const response = await fetch(`https://jsonplaceholder.typicode.com/posts?_page=${pageParam}&_limit=10`);
@@ -51,6 +43,17 @@ const Home: React.FC = () => {
       },
     }
   );
+};
+
+const Home: React.FC = () => {
+  const [page, setPage] = useState(1);
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+  } = usePostListQuery();
 
   const handleLoadMore = () => {
     fetchNextPage({ pageParam: page + 1 });
