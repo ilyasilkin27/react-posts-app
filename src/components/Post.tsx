@@ -15,7 +15,9 @@ const Post: React.FC<PostProps> = ({ post }) => {
           <div className="card-body">
             <h5 className="card-title">{post.id}. {post.title}</h5>
             <p className="card-text">{post.body.length > 100 ? `${post.body.slice(0, 100)}...` : post.body}</p>
-            <Link to={`/post/${post.id}`} className="btn btn-primary">View</Link>
+            <button className="btn btn-primary">
+                <Link className='text-white' style={{ textDecoration: 'none'}} to={`/post/${post.id}`}>View</Link>
+            </button>
           </div>
         </div>
       );
