@@ -1,6 +1,6 @@
 [![Ru](https://img.shields.io/badge/Rus-blue)](README_ru.md)
 [![Maintainability](https://api.codeclimate.com/v1/badges/32d9fc9cc5c8883cebf2/maintainability)](https://codeclimate.com/github/ilyasilkin27/test/maintainability)
-[![github pages link](https://img.shields.io/badge/GitHub-pages-black)](https://ilyasilkin27.github.io/react-posts-app/)
+[![github pages link](https://img.shields.io/badge/GitHub-pages-white)](https://ilyasilkin27.github.io/react-posts-app/)
 
 ## Description
 
