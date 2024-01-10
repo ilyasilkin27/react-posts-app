@@ -60,10 +60,7 @@ const Home: React.FC = () => {
     setPage(page + 1);
   };
 
-  if (isLoading) {
-    return <LoadingIndicator />;
-  }
-
+  if (isLoading) return <LoadingIndicator />;
   return (
     <div className='container'>
       <h1 className='mt-4 mb-4 text-center'>Posts</h1>
