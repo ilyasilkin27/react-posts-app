@@ -1,15 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-
-const LoadingIndicator = () => (
-  <div className='container mt-4 mb-4'>
-    <div className="mt-4 mb-4 d-flex justify-content-center">
-      <div className="spinner-border" role="status">
-        <span className="sr-only"></span>
-      </div>
-    </div>
-  </div>
-);
+import LoadingIndicator from './LoadingIndicator';
 
 const PostDetails = ({ post }: { post: any }) => (
   <div>
@@ -17,6 +8,16 @@ const PostDetails = ({ post }: { post: any }) => (
     <p>{post.body}</p>
   </div>
 );
+
+const renderContent = (isLoading: boolean, post: any) => {
+  if (isLoading) {
+    return <LoadingIndicator />;
+  }
+  if (post) {
+    return <PostDetails post={post} />;
+  }
+  return <div>No post found</div>;
+};
 
 const PostDetailsPage: React.FC = () => {
   const { postId } = useParams<{ postId: string }>();
@@ -46,16 +47,10 @@ const PostDetailsPage: React.FC = () => {
   return (
     <div className="container mt-4">
       <h2>Post Details</h2>
-      {isLoading ? (
-        <LoadingIndicator />
-      ) : (
-        <React.Fragment>
-          {post ? <PostDetails post={post} /> : <div>No post found</div>}
-          <button className="btn btn-primary">
-            <Link className='text-white' style={{ textDecoration: 'none'}} to="/">Back</Link>
-          </button>
-        </React.Fragment>
-      )}
+      {renderContent(isLoading, post)}
+      <button className="btn btn-primary">
+        <Link className='text-white' style={{ textDecoration: 'none'}} to="/">Back</Link>
+      </button>
     </div>
   );
 };

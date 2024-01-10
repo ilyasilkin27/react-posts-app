@@ -1,17 +1,7 @@
 import React, { useState } from 'react';
 import { useInfiniteQuery } from 'react-query';
 import Post from './Post';
-
-
-const LoadingIndicator = () => (
-  <div className='container mt-4 mb-4'>
-    <div className="mt-4 mb-4  d-flex justify-content-center">
-      <div className="mt-4 mb-4 spinner-border" role="status">
-        <span className="sr-only"></span>
-      </div>
-    </div>
-  </div>
-);
+import LoadingIndicator from './LoadingIndicator';
 
 const PostList = ({ data }: { data: any[] }) => (
   <>
@@ -19,6 +9,22 @@ const PostList = ({ data }: { data: any[] }) => (
       <Post key={post.id} post={post} />
     ))}
   </>
+);
+
+const LoadMoreButton = ({ onClick, isFetchingNextPage }: { onClick: () => void; isFetchingNextPage: boolean }) => (
+  <div className="text-center my-4">
+    <button 
+      className="btn btn-primary" 
+      onClick={onClick}
+      disabled={isFetchingNextPage}
+    >
+      {isFetchingNextPage ? (
+        <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      ) : (
+        "Load More"
+      )}
+    </button>
+  </div>
 );
 
 const Home: React.FC = () => {
@@ -63,19 +69,7 @@ const Home: React.FC = () => {
           <PostList data={pageData} />
         </React.Fragment>
       ))}
-      <div className="text-center my-4">
-        <button 
-          className="btn btn-primary" 
-          onClick={handleLoadMore}
-          disabled={isFetchingNextPage}
-        >
-          {isFetchingNextPage ? (
-            <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-          ) : (
-            "Load More"
-          )}
-        </button>
-      </div>
+      <LoadMoreButton onClick={handleLoadMore} isFetchingNextPage={isFetchingNextPage} />
       {!hasNextPage && <div className="text-center my-4">No more posts to load</div>}
     </div>
   );
